@@ -6,7 +6,8 @@
 
 #include <types.hpp>
 
-class Package {
+class Package
+{
 
 private:
     ElementID id_;

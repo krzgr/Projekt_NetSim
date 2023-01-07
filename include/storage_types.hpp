@@ -10,7 +10,8 @@ enum class PackageQueueType
     LIFO
 };
 
-class IPackageStockpile {
+class IPackageStockpile
+{
 public:
     using const_iterator = std::list<Package>::const_iterator;
 
@@ -25,13 +26,15 @@ public:
     virtual const_iterator cend() const = 0;
 };
 
-class IPackageQueue : public IPackageStockpile {
+class IPackageQueue : public IPackageStockpile
+{
 public:
     virtual PackageQueueType getPackageQueueType() const = 0;
     virtual Package pop() = 0;
 };
 
-class PackageQueue : public IPackageQueue {
+class PackageQueue : public IPackageQueue
+{
 public:
     PackageQueue(PackageQueueType type) : package_queue_type_(type) {}
 

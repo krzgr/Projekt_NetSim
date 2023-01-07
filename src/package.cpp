@@ -1,9 +1,13 @@
 #include <package.hpp>
 
 std::set<ElementID> Package::assigned_IDs_ = {};
-std::set<ElementID> Package::free_IDs_ = {1}; // zaczynamy od 1, czy od zera?
+std::set<ElementID> Package::free_IDs_ = {};
 
-Package::Package() {
+Package::Package()
+{
+    if(assigned_IDs_.empty())
+        free_IDs_.insert(1);
+    
     if(!free_IDs_.empty())
     {
         id_ = *free_IDs_.begin();
@@ -17,7 +21,8 @@ Package::Package() {
     }
 }
 
-Package& Package::operator=(Package&& other) noexcept {
+Package& Package::operator=(Package&& other) noexcept
+{
     // Też nie jestem pewien, czy tego potrzebujemy
     // Lepiej skorzystać z konstruktora przenoszącego Package(Package&& package)
     assigned_IDs_.erase(id_);
@@ -26,7 +31,8 @@ Package& Package::operator=(Package&& other) noexcept {
     return *this;
 }
 
-Package::~Package() {
+Package::~Package()
+{
     assigned_IDs_.erase(id_);
     free_IDs_.insert(id_);
 }

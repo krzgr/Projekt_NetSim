@@ -22,18 +22,22 @@ Package PackageQueue::pop()
     return Package(); // W celu wyciszenia błędu "error: control reaches end of non-void function"
 }
 
-PackageQueue::const_iterator PackageQueue::begin() const {
+PackageQueue::const_iterator PackageQueue::begin() const
+{
     return package_list_.cbegin();
 }
 
-PackageQueue::const_iterator PackageQueue::end() const {
+PackageQueue::const_iterator PackageQueue::end() const
+{
     return package_list_.cend();
 }
 
-PackageQueue::const_iterator PackageQueue::cbegin() const {
+PackageQueue::const_iterator PackageQueue::cbegin() const
+{
     return package_list_.cbegin();
 }
 
-PackageQueue::const_iterator PackageQueue::cend() const {
+PackageQueue::const_iterator PackageQueue::cend() const
+{
     return package_list_.cend();
 }

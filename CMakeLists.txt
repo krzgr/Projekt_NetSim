@@ -13,6 +13,9 @@ include_directories(
 set(SOURCE_FILES
         "src/package.cpp"
         "src/storage_types.cpp"
+        "src/factory.cpp"
+        "src/helpers.cpp"
+        "src/nodes.cpp"
         )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} "main.cpp")

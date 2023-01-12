@@ -18,7 +18,9 @@ public:
     Package();
     Package(ElementID id) : id_(id) { assigned_IDs_.insert(id_); }
     Package(Package&& package) = default;
+    Package(Package& package) = delete;
     Package& operator=(Package&& other) noexcept;
+    Package operator=(Package& other) = delete;
     ElementID get_id() const { return id_; }
     ~Package();
 

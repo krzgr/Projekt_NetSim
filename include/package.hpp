@@ -3,7 +3,6 @@
 
 #include <algorithm>
 #include <set>
-
 #include <types.hpp>
 
 class Package

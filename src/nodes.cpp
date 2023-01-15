@@ -3,10 +3,11 @@
 
 void Worker::receive_package(Package&& p) {
 
+// do napisania
 }
 
 void Storehouse::receive_package(Package&& p) {
-
+// do  napisania
 }
 
 void ReceiverPreferences::remove_receiver(IPackageReceiver* r) {

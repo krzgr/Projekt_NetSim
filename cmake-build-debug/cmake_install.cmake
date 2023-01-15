@@ -1,4 +1,4 @@
-# Install script for directory: C:/studia/zpo/Projekt_NetSim
+# Install script for directory: C:/Users/Pc/Documents/AGH/3semestr/zaawansowane_programowanie_obiektowe/Projekt_NetSim
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,12 +34,12 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Program Files/MinGW/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Program Files/JetBrains/CLion 2021.3.3/bin/mingw/bin/objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/studia/zpo/Projekt_NetSim/cmake-build-debug/googletest-master/cmake_install.cmake")
+  include("C:/Users/Pc/Documents/AGH/3semestr/zaawansowane_programowanie_obiektowe/Projekt_NetSim/cmake-build-debug/googletest-master/cmake_install.cmake")
 
 endif()
 
@@ -51,5 +51,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/studia/zpo/Projekt_NetSim/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Pc/Documents/AGH/3semestr/zaawansowane_programowanie_obiektowe/Projekt_NetSim/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

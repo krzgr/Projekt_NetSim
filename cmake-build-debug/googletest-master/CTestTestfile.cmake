@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: C:/studia/zpo/Projekt_NetSim/googletest-master
-# Build directory: C:/studia/zpo/Projekt_NetSim/cmake-build-debug/googletest-master
+# Source directory: C:/Users/Pc/Documents/AGH/3semestr/zaawansowane_programowanie_obiektowe/Projekt_NetSim/googletest-master
+# Build directory: C:/Users/Pc/Documents/AGH/3semestr/zaawansowane_programowanie_obiektowe/Projekt_NetSim/cmake-build-debug/googletest-master
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

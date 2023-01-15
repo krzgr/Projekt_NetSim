@@ -14,13 +14,6 @@ enum class NodeColor
     VERIFIED
 };
 
-enum class receiverType
-{
-    WORKER,
-    STOREHOUSE
-};
-
-
 template <typename Node>
 
 class NodeCollection

@@ -4,8 +4,9 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
-#include "types.hpp"
-#include "nodes.hpp"
+
+#include <types.hpp>
+#include <nodes.hpp>
 
 enum class NodeColor
 {

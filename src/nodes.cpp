@@ -21,18 +21,14 @@ void ReceiverPreferences::remove_receiver(IPackageReceiver* r)
 
 IPackageReceiver* ReceiverPreferences::choose_receiver()
 {   
-    if(preferences_.size() == 0)
-        return nullptr;
-    
     const double random_val = pg_();
     double min_val = 0.0;
 
     for(const auto& x : preferences_)
     {
-        if(random_val > min_val && random_val < min_val + x.second)
+        min_val += x.second;
+        if(random_val <= min_val)
             return x.first;
-        else
-            min_val += x.second;
     }
 
     return nullptr; // control reaches end of non-void function [-Wreturn-type]
@@ -52,10 +48,9 @@ void PackageSender::send_package()
 void Ramp::deliver_goods(Time t)
 {
     if(t % di_ == 0)
-    {
-        push_package(Package());
         send_package();
-    }
+    else if(get_sending_buffer().has_value() == false)
+        push_package(Package());
 }
 
 

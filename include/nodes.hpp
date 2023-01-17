@@ -42,6 +42,11 @@ public:
     IPackageReceiver* choose_receiver();          // zabawa z prawdopodobieństwem
     const preferences_t& get_preferences() { return preferences_; };
 
+    const_iterator begin() const { return preferences_.cbegin(); }
+    const_iterator end() const { return preferences_.cend(); }
+    const_iterator cbegin() const { return preferences_.cbegin(); };
+    const_iterator cend() const { return preferences_.cend(); };
+
 private:
     ProbabilityGenerator pg_;
     preferences_t preferences_;
@@ -66,6 +71,7 @@ private:
 
 class Ramp : public PackageSender
 {
+public:
     Ramp(ElementID id, TimeOffset di) : id_(id), di_(di) {}
     void deliver_goods(Time t);
     TimeOffset get_delivery_interval_() const { return di_; }
@@ -103,7 +109,7 @@ private:
 class Storehouse : public IPackageReceiver
 {
 public:
-    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d) : id_(id), d_(std::move(d)) {};
+    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d = std::make_unique<PackageQueue>(PackageQueueType::FIFO)) : id_(id), d_(std::move(d)) {};
 
     virtual void receive_package(Package&& p) override;
     virtual ElementID get_id() const override { return id_; }
@@ -116,5 +122,5 @@ private:
     ElementID id_;
     std::unique_ptr<IPackageStockpile> d_;
 };
-#endif
 
+#endif /*NETSIM_NODES_HPP*/

@@ -1,14 +1,16 @@
 #ifndef NETSIM_NODES_HPP
 #define NETSIM_NODES_HPP
 
+#include <types.hpp>
+#include <storage_types.hpp>
+
 #include <iostream>
 #include <list>
-#include "types.hpp"
-#include "storage_types.hpp"
 #include <algorithm>
 #include <map>
 #include <optional>
 #include <memory>
+
 
 enum class ReceiverType
 {
@@ -33,78 +35,79 @@ class ReceiverPreferences
 public:
     using preferences_t = std::map<IPackageReceiver*, double>;
     using const_iterator = preferences_t::const_iterator;
-    preferences_t preferences_;         //nie wiem, jak zainicjalizować
 
-    ReceiverPreferences(ProbabilityGenerator pg) : pg_(std::move(pg)) {}
-    void add_receiver(IPackageReceiver* r) { receivers_.push_back(r); } //przechowujemy wskazniki czy po id?
+    ReceiverPreferences(ProbabilityGenerator pg = probability_generator) : pg_(pg) {}
+    void add_receiver(IPackageReceiver* r);
     void remove_receiver(IPackageReceiver* r);
-    IPackageReceiver* choose_receiver() {};          // zabawa z prawdopodobieństwem
-    preferences_t& get_preferences() {return preferences_;};  // dobrze?
+    IPackageReceiver* choose_receiver();          // zabawa z prawdopodobieństwem
+    const preferences_t& get_preferences() { return preferences_; };
 
 private:
     ProbabilityGenerator pg_;
-    std::list<IPackageReceiver*> receivers_;
-
+    preferences_t preferences_;
 };
+
 
 class PackageSender
 {
 public:
-
-    ReceiverPreferences receiver_preferences_; //nie wiem, gdzie zainicjalizować i jak
+    ReceiverPreferences receiver_preferences_;
+    PackageSender() = default;
     PackageSender(PackageSender&&) = default;
     PackageSender(Package&) = delete;
-    void send_package() {};                                                //do napisania, nie wiem jak obejść to, że funkcja nic nie zwraca
-    std::optional<Package>& get_sending_buffer() const { return (std::optional<Package>&) bufor_; }
+    void send_package();
+    const std::optional<Package>& get_sending_buffer() const { return bufor_; }
 protected:
     void push_package(Package&& p) { bufor_.emplace(std::move(p)); }
 private:
-    std::optional<Package> bufor_; // chyba nie wiem, jak skorzystać z std::optional
-
+    std::optional<Package> bufor_;
 };
+
 
 class Ramp : public PackageSender
 {
-    Ramp(PackageSender&& other, ElementID id, TimeOffset di) : PackageSender(std::move(other)), id_(id), di_(di) {}
-    void deliver_goods(Time t) {};   // do napisania
-    TimeOffset get_delivery_interval_() const {}; // do napisania
+    Ramp(ElementID id, TimeOffset di) : id_(id), di_(di) {}
+    void deliver_goods(Time t);
+    TimeOffset get_delivery_interval_() const { return di_; }
     ElementID get_id() const { return id_; }
 private:
     ElementID id_;
     TimeOffset di_;
-
 };
 
-class Worker : public PackageSender, public IPackageQueue, public IPackageReceiver
+class Worker : public PackageSender, public IPackageReceiver
 {
 public:
-    Worker(PackageSender&& other, ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> q) : PackageSender(std::move(other)), id_(id), pd_(pd), q_(std::move(q)) {}
+    Worker(ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> q) : id_(id), pd_(pd), q_(std::move(q)), package_processing_start_time(0) {}
 
     virtual void receive_package(Package&& p) override;
     virtual ElementID get_id() const override { return id_; }
 
-    void do_work(Time t){};
-    TimeOffset get_processing_duration() const {return pd_;};
-    Time get_package_processing_start_time() const {}; // do napisania
+    void do_work(Time t);
+    TimeOffset get_processing_duration() const { return pd_; }
+    Time get_package_processing_start_time() const { return package_processing_start_time; }
+
     virtual IPackageStockpile::const_iterator begin() const override { return q_->cbegin(); }
     virtual IPackageStockpile::const_iterator end() const override { return q_->cend(); }
-    virtual IPackageStockpile::const_iterator cbegin() const override { return q_->cbegin(); };
-    virtual IPackageStockpile::const_iterator cend() const override { return q_->cend(); };
-
+    virtual IPackageStockpile::const_iterator cbegin() const override { return q_->cbegin(); }
+    virtual IPackageStockpile::const_iterator cend() const override { return q_->cend(); }
 
 private:
     ElementID id_;
     TimeOffset pd_;
     std::unique_ptr<IPackageQueue> q_;
+
+    Time package_processing_start_time;
 };
 
-class Storehouse : public IPackageReceiver, public IPackageStockpile
+class Storehouse : public IPackageReceiver
 {
 public:
     Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d) : id_(id), d_(std::move(d)) {};
 
     virtual void receive_package(Package&& p) override;
     virtual ElementID get_id() const override { return id_; }
+
     virtual IPackageStockpile::const_iterator begin() const override { return d_->cbegin(); }
     virtual IPackageStockpile::const_iterator end() const override { return d_->cend(); }
     virtual IPackageStockpile::const_iterator cbegin() const override { return d_->cbegin(); };

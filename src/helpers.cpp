@@ -1,8 +1,4 @@
-#include "helpers.hpp"
-#include "helpers.hpp"
-
-#include <cstdlib>
-#include <random>
+#include <helpers.hpp>
 
 // Do generowania wysokiej jakości ciągów liczb pseudolosowych warto użyć
 // zaawansowanych generatorów, np. algorytmu Mersenne Twister.

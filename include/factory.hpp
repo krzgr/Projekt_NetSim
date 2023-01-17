@@ -18,9 +18,12 @@ template <typename Node>
 
 class NodeCollection
 {
+public:
     using NodeContainer = typename std::list<Node>;
     using iterator = typename NodeContainer::iterator;
     using const_iterator = typename NodeContainer::const_iterator;
+
+private:
     NodeContainer collection_;
 
 public:

@@ -28,6 +28,8 @@ public:
     virtual IPackageStockpile::const_iterator end() const = 0;
     virtual IPackageStockpile::const_iterator cbegin() const = 0;
     virtual IPackageStockpile::const_iterator cend() const = 0;
+
+    virtual ReceiverType get_receiver_type() const = 0;
 };
 
 class ReceiverPreferences
@@ -76,6 +78,10 @@ public:
     void deliver_goods(Time t);
     TimeOffset get_delivery_interval_() const { return di_; }
     ElementID get_id() const { return id_; }
+
+    Ramp() = default;
+    Ramp(Ramp&&) = default;
+    Ramp(Ramp&) = delete;
 private:
     ElementID id_;
     TimeOffset di_;
@@ -98,6 +104,11 @@ public:
     virtual IPackageStockpile::const_iterator cbegin() const override { return q_->cbegin(); }
     virtual IPackageStockpile::const_iterator cend() const override { return q_->cend(); }
 
+    virtual ReceiverType get_receiver_type() const override { return ReceiverType::WORKER; }
+
+    Worker() = default;
+    Worker(Worker&&) = default;
+    Worker(Worker&) = delete;
 private:
     ElementID id_;
     TimeOffset pd_;
@@ -116,8 +127,10 @@ public:
 
     virtual IPackageStockpile::const_iterator begin() const override { return d_->cbegin(); }
     virtual IPackageStockpile::const_iterator end() const override { return d_->cend(); }
-    virtual IPackageStockpile::const_iterator cbegin() const override { return d_->cbegin(); };
-    virtual IPackageStockpile::const_iterator cend() const override { return d_->cend(); };
+    virtual IPackageStockpile::const_iterator cbegin() const override { return d_->cbegin(); }
+    virtual IPackageStockpile::const_iterator cend() const override { return d_->cend(); }
+
+    virtual ReceiverType get_receiver_type() const override { return ReceiverType::STOREHOUSE; }
 private:
     ElementID id_;
     std::unique_ptr<IPackageStockpile> d_;

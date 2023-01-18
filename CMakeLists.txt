@@ -13,14 +13,14 @@ include_directories(
 set(SOURCE_FILES
         "src/package.cpp"
         "src/storage_types.cpp"
-        
+        "src/factory.cpp"
         "src/helpers.cpp"
         "src/nodes.cpp"
         )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} "main.cpp")
 
-target_compile_definitions(${PROJECT_NAME} PUBLIC EXERCISE_ID=EXERCISE_ID_NODES)
+target_compile_definitions(${PROJECT_NAME} PUBLIC EXERCISE_ID=EXERCISE_ID_FACTORY)
 
 set(SOURCES_FILES_TESTS
         "test/test_package.cpp"

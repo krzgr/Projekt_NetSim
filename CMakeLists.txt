@@ -36,6 +36,8 @@ target_include_directories("${PROJECT_NAME}_test" PUBLIC
         "mocks"
         )
 
+target_compile_definitions("${PROJECT_NAME}_test" PUBLIC EXERCISE_ID=EXERCISE_ID_NODES)
+
 add_subdirectory("googletest-master")
 
 target_link_libraries("${PROJECT_NAME}_test" "gmock")

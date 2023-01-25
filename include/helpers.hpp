@@ -1,8 +1,6 @@
 #ifndef HELPERS_HPP_
 #define HELPERS_HPP_
 
-#define WITH_PROBABILITY_GENERATOR
-
 #include <functional>
 #include <random>
 
